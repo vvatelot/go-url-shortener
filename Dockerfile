@@ -13,6 +13,7 @@ FROM gcr.io/distroless/base-debian10
 WORKDIR /
 COPY --from=build /url-shortener /url-shortener
 ADD public/ /public/
+ADD views/ /views/
 EXPOSE 3000
 USER nonroot:nonroot
 ENTRYPOINT ["/url-shortener"]
