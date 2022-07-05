@@ -1,0 +1,22 @@
+version: "3"
+
+services:
+  app:
+    container_name: url-shortener-app
+    build: .
+    ports:
+      - "3000:3000"
+    environment:
+      ENV: prod
+      DATABASE_URI: "host=db user=gorm password=gorm dbname=gorm sslmode=disable"
+      APP_PORT: 3000
+    depends_on:
+      - db
+
+  db:
+    container_name: url-shortener-db
+    image: postgres
+    environment:
+      POSTGRES_PASSWORD: gorm
+      POSTGRES_USER: gorm
+      POSTGRES_DB: gorm
