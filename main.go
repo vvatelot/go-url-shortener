@@ -12,9 +12,9 @@ import (
 
 func main() {
 	app := fiber.New()
-	app.Use(
-		logger.New(),
-	)
+	if os.Getenv("ENV") == "dev" {
+		app.Use(logger.New())
+	}
 	config.Connect()
 
 	app.Get("/links/:id", handlers.GetLink)
