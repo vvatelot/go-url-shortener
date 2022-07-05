@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="fr" data-theme="light">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://unpkg.com/@picocss/pico@latest/css/pico.min.css">
+    <title>URL Shortener</title>
+</head>
+
+<body>
+    <main class="container">
+        <h1>Liste des liens :</h1>
+        <table>
+            <thead>
+                <tr>
+                    <th scope="col"></th>
+                    <th scope="col">Lien</th>
+                    <th scope="col">Redirection</th>
+                    <th scope="col">Nombre clics</th>
+                    <th scope="col">Ajouté le</th>
+                    <th scope="col">Actif</th>
+                </tr>
+            </thead>
+            <tbody>
+                {{range .Links}}
+                <tr>
+                    <th scope="row">1</th>
+                    <td><a href="{{.URL}}">{{.Title}}</a></td>
+                    <td><a href="/r/{{.Key}}" target="_blank">Redirect</a></td>
+                    <td>{{len .Clicks}}</td>
+                    <td>{{.CreatedAt.Format "2006-01-02 15:04"}}</td>
+                    <td>
+                        <fieldset>
+                            <input type="checkbox" role="switch" checked="{{.Active}}">
+                        </fieldset>
+                    </td>
+                </tr>
+                {{end}}
+        </table>
+    </main>
+</body>
+
+</html>
