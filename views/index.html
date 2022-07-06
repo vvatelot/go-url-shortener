@@ -14,9 +14,7 @@
         <table>
             <thead>
                 <tr>
-                    <th scope="col"></th>
                     <th scope="col">Lien</th>
-                    <th scope="col">Redirection</th>
                     <th scope="col">Nombre clics</th>
                     <th scope="col">Ajouté le</th>
                     <th scope="col">Actif</th>
@@ -25,9 +23,7 @@
             <tbody>
                 {{range .Links}}
                 <tr>
-                    <th scope="row">1</th>
-                    <td><a href="{{.URL}}">{{.Title}}</a></td>
-                    <td><a href="/r/{{.Key}}" target="_blank">Redirect</a></td>
+                    <td><a href="/r/{{.Key}}">{{.Title}}</a></td>
                     <td>{{len .Clicks}}</td>
                     <td>{{.CreatedAt.Format "2006-01-02 15:04"}}</td>
                     <td>
