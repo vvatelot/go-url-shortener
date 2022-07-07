@@ -8,6 +8,7 @@ import (
 	uuid "github.com/satori/go.uuid"
 	"github.com/vvatelot/url-shortener/api/entities"
 	"github.com/vvatelot/url-shortener/config"
+	"github.com/vvatelot/url-shortener/utils"
 )
 
 func GetLinks(c *fiber.Ctx) error {
@@ -50,12 +51,24 @@ func AddLink(c *fiber.Ctx) error {
 		return c.Status(http.StatusBadRequest).SendString("Invalid request")
 	}
 
+	response, err := http.Get(link.URL)
+	if err != nil || response.StatusCode != http.StatusOK {
+		return c.Status(http.StatusBadRequest).SendString("Invalid URL")
+	}
+	defer response.Body.Close()
+
+	if title, ok := utils.GetHtmlTitle(response.Body); ok {
+		link.Title = title
+	} else {
+		return c.Status(http.StatusBadRequest).SendString("Can not get Page title")
+	}
+
 	link.Key = uuid.NewV4().String()
 
 	result := config.Database.Create(&link)
 
 	if result.Error != nil {
-		return c.Status(http.StatusInternalServerError).SendString("Internal server error")
+		return c.Status(http.StatusInternalServerError).SendString("Error while saving link")
 	}
 
 	return c.Status(http.StatusCreated).JSON(link)
@@ -72,8 +85,6 @@ func UpdateLink(c *fiber.Ctx) error {
 
 	result := config.Database.Find(&dbLink, id)
 
-	//TODO: rework Update if no value changed
-
 	if result.RowsAffected == 0 {
 		return c.Status(http.StatusNotFound).SendString("Not found")
 	}
@@ -84,10 +95,6 @@ func UpdateLink(c *fiber.Ctx) error {
 
 	if bodyLink.URL != "" {
 		dbLink.URL = bodyLink.URL
-	}
-
-	if bodyLink.Active {
-		dbLink.Active = bodyLink.Active
 	}
 
 	config.Database.Save(&dbLink)
@@ -107,6 +114,23 @@ func DeleteLink(c *fiber.Ctx) error {
 	return c.Status(http.StatusNoContent).SendString("")
 }
 
+func ActivateLink(c *fiber.Ctx) error {
+	id := c.Params("id")
+
+	var link entities.Link
+
+	result := config.Database.Find(&link, id)
+	link.Active = !link.Active
+
+	if result.RowsAffected == 0 {
+		return c.Status(http.StatusNotFound).SendString("Not found")
+	}
+
+	config.Database.Save(&link)
+
+	return c.Status(http.StatusOK).JSON(link)
+}
+
 func Redirect(c *fiber.Ctx) error {
 	key := c.Params("key")
 	var link entities.Link
@@ -123,6 +147,10 @@ func Redirect(c *fiber.Ctx) error {
 
 	if resultCreate.Error != nil {
 		return c.Status(http.StatusInternalServerError).SendString("Internal server error")
+	}
+
+	if !link.Active {
+		return c.Status(http.StatusGone).SendString("Link is disabled")
 	}
 
 	return c.Redirect(link.URL)

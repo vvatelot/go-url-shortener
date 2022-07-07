@@ -23,6 +23,13 @@ func HandleHomePage(c *fiber.Ctx) error {
 	config.Database.Model(&entities.Link{}).Preload("Clicks").Limit(size).Offset((page - 1) * size).Find(&links)
 
 	return c.Render("index", fiber.Map{
-		"Links": links,
+		"PageTitle": "Liste des liens",
+		"Links":     links,
+	})
+}
+
+func HandleNewPage(c *fiber.Ctx) error {
+	return c.Render("editLink", fiber.Map{
+		"PageTitle": "Ajouter un lien",
 	})
 }

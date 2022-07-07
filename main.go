@@ -6,6 +6,7 @@ import (
 	"github.com/gofiber/template/html"
 
 	"github.com/gofiber/fiber/v2"
+	"github.com/gofiber/fiber/v2/middleware/basicauth"
 	"github.com/gofiber/fiber/v2/middleware/logger"
 	_ "github.com/joho/godotenv/autoload"
 	"github.com/vvatelot/url-shortener/api/handlers"
@@ -24,18 +25,25 @@ func main() {
 	}
 	config.Connect()
 
-	app.Get("/", front.HandleHomePage)
-
-	app.Get("/links/:id", handlers.GetLink)
-	app.Get("/links", handlers.GetLinks)
-	app.Post("/links", handlers.AddLink)
-	app.Patch("/links/:id", handlers.UpdateLink)
-	app.Delete("/links/:id", handlers.DeleteLink)
-
-	app.Get("/clicks/:id", handlers.GetClick)
-	app.Get("/clicks/", handlers.GetClicks)
-
 	app.Get("/r/:key", handlers.Redirect)
+	app.Static("/", "./public")
+
+	app.Use(basicauth.New(config.BasicAuthConfig()))
+	app.Get("/", front.HandleHomePage)
+	app.Get("/new", front.HandleNewPage)
+
+	api := app.Group("/api")
+	links := api.Group("/links")
+	links.Get("/:id", handlers.GetLink)
+	links.Get("/", handlers.GetLinks)
+	links.Post("/", handlers.AddLink)
+	links.Patch("/:id", handlers.UpdateLink)
+	links.Delete("/:id", handlers.DeleteLink)
+	links.Put("/:id/switch-active", handlers.ActivateLink)
+
+	clicks := api.Group("/clicks")
+	clicks.Get("/:id", handlers.GetClick)
+	clicks.Get("/", handlers.GetClicks)
 
 	app.Listen(":" + os.Getenv("APP_PORT"))
 }
