@@ -1,15 +1,15 @@
-{{template "partials/header" .}}
+{{ template "partials/header" . }}
 
 <body>
-    {{template "partials/nav" .}}
+    {{ template "partials/nav" . }}
     <main class="container">
-        <h1>{{.Title}}</h1>
+        <h1>{{ .Title }}</h1>
         <form>
             <label for="url">
                 URL
-                <input type="text" id="url" name="url" placeholder="http://" required value="{{.Link.URL}}">
+                <input type="text" id="url" name="url" placeholder="http://" required>
             </label>
-            <button type="submit" onclick="event.preventDefault(); addNewLink({{.Link.ID}})">Submit</button>
+            <button type="submit" onclick="event.preventDefault(); addNewLink('{{ .Link.ID }}')">Submit</button>
         </form>
     </main>
 </body>

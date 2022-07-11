@@ -1,7 +1,7 @@
-{{template "partials/header" .}}
+{{ template "partials/header" . }}
 
 <body>
-    {{template "partials/nav" .}}
+    {{ template "partials/nav" . }}
     <main class="container">
         <table>
             <thead>
@@ -14,20 +14,23 @@
                 </tr>
             </thead>
             <tbody>
-                {{range .Links}}
+                {{ range .Links }}
                 <tr>
-                    <td><a href="/r/{{.Key}}">{{.Title}}</a></td>
-                    <td>{{len .Clicks}}</td>
-                    <td>{{.CreatedAt.Format "2006-01-02 15:04"}}</td>
+                    <td><a href="/r/{{ .Key }}">{{ .Title }}</a></td>
+                    <td>{{ len .Clicks }}</td>
+                    <td>{{ .CreatedAt.Format "2006-01-02 15:04" }}</td>
                     <td>
                         <fieldset>
-                            <input type="checkbox" role="switch" {{if .Active}}checked{{end}} onclick="switchLink({{.ID}})">
+                            <input type="checkbox" role="switch" {{if .Active}}checked{{end}} onclick="switchLink('{{.ID}}')">
                         </fieldset>
                     </td>
-                    <td><button onclick="deleteLink({{.ID}})">X</button></td>
+                    <td><button onclick="deleteLink('{{.ID}}')">X</button></td>
                 </tr>
-                {{end}}
+                {{ end }}
         </table>
+        {{ if .Links }}
+        {{ template "partials/pagination" .Pagination }}
+        {{ end }}
     </main>
 </body>
 <script type="text/javascript" src="/js/app.js"></script>

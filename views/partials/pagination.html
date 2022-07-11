@@ -1,0 +1,25 @@
+<nav>
+    <ul></ul>
+    <ul>
+        {{ if ne .PageCurrent 1 }}
+        <li><a href="/">1</a></li>
+        {{ end }}
+        {{ if gt .PagePrevious 2 }}
+        <li>...</li>
+        {{ if ne .PagePrevious .PageCurrent }}
+        <li><a href="/?page={{.PagePrevious}}">{{.PagePrevious}}</a></li>
+        {{ end }}
+        {{ end }}
+        <li><a href="/?page={{.PageCurrent}}"><mark>{{.PageCurrent}}</mark></a></li>
+        {{ if lt .PageNext .PageLast }}
+        {{ if ne .PageNext .PageCurrent }}
+        <li><a href="/?page={{.PageNext}}">{{.PageNext}}</a></li>
+        {{ end }}
+        <li>...</li>
+        {{ end }}
+        {{ if ne .PageCurrent .PageLast }}
+        <li><a href="/?page={{.PageLast}}">{{.PageLast}}</a></li>
+        {{ end }}
+    </ul>
+    <ul></ul>
+</nav>

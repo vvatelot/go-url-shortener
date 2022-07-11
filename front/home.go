@@ -4,13 +4,11 @@ import (
 	"strconv"
 
 	"github.com/gofiber/fiber/v2"
-	"github.com/vvatelot/url-shortener/api/entities"
-	"github.com/vvatelot/url-shortener/config"
+	"github.com/vvatelot/url-shortener/api/repositories"
+	"github.com/vvatelot/url-shortener/utils"
 )
 
 func HandleHomePage(c *fiber.Ctx) error {
-	var links []entities.Link
-
 	page, err := strconv.Atoi(c.Query("page"))
 	if err != nil {
 		page = 1
@@ -20,11 +18,14 @@ func HandleHomePage(c *fiber.Ctx) error {
 		size = 10
 	}
 
-	config.Database.Model(&entities.Link{}).Preload("Clicks").Limit(size).Offset((page - 1) * size).Find(&links)
+	links, _ := repositories.ListLinks(size, page)
+
+	CountAllLinks := repositories.CountAllLinks()
 
 	return c.Render("index", fiber.Map{
-		"PageTitle": "Liste des liens",
-		"Links":     links,
+		"PageTitle":  "Liste des liens",
+		"Links":      links,
+		"Pagination": utils.GetPagination(CountAllLinks, page, size),
 	})
 }
 

@@ -7,12 +7,14 @@ import (
 	"github.com/gofiber/fiber/v2"
 	uuid "github.com/satori/go.uuid"
 	"github.com/vvatelot/url-shortener/api/entities"
+	"github.com/vvatelot/url-shortener/api/repositories"
 	"github.com/vvatelot/url-shortener/config"
 	"github.com/vvatelot/url-shortener/utils"
 )
 
 func GetLinks(c *fiber.Ctx) error {
-	var links []entities.Link
+	var response entities.APIListResponse[entities.Link]
+
 	size, err := strconv.Atoi(c.Query("size"))
 	if err != nil {
 		size = 10
@@ -23,25 +25,31 @@ func GetLinks(c *fiber.Ctx) error {
 		page = 1
 	}
 
-	result := config.Database.Limit(size).Offset((page - 1) * size).Find(&links)
-	if result.RowsAffected == 0 {
+	links, err := repositories.ListLinks(size, page)
+	if err != nil {
 		return c.Status(http.StatusNotFound).SendString("Not found")
 	}
 
-	return c.Status(http.StatusOK).JSON(links)
+	countAllLinks := repositories.CountAllLinks()
+
+	response.Data = links
+	response.Pagination = utils.GetPagination(countAllLinks, page, size)
+
+	return c.Status(http.StatusOK).JSON(response)
 }
 
 func GetLink(c *fiber.Ctx) error {
-	id := c.Params("id")
-	var link entities.Link
+	id, err := strconv.Atoi(c.Params("id"))
+	if err != nil {
+		return c.Status(http.StatusBadRequest).SendString("Invalid id")
+	}
 
-	result := config.Database.Find(&link, id)
-
-	if result.RowsAffected == 0 {
+	link, err := repositories.GetLinkByID(id)
+	if err != nil {
 		return c.Status(http.StatusNotFound).SendString("Not found")
 	}
 
-	return c.Status(http.StatusOK).JSON(&link)
+	return c.Status(http.StatusOK).JSON(link)
 }
 
 func AddLink(c *fiber.Ctx) error {
@@ -75,17 +83,18 @@ func AddLink(c *fiber.Ctx) error {
 }
 
 func UpdateLink(c *fiber.Ctx) error {
-	id := c.Params("id")
+	id, err := strconv.Atoi(c.Params("id"))
+	if err != nil {
+		return c.Status(http.StatusBadRequest).SendString("Invalid id")
+	}
 	var bodyLink entities.Link
-	var dbLink entities.Link
 
 	if err := c.BodyParser(&bodyLink); err != nil {
 		return c.Status(http.StatusBadRequest).SendString("Invalid request")
 	}
 
-	result := config.Database.Find(&dbLink, id)
-
-	if result.RowsAffected == 0 {
+	dbLink, err := repositories.GetLinkByID(id)
+	if err != nil {
 		return c.Status(http.StatusNotFound).SendString("Not found")
 	}
 
@@ -141,7 +150,8 @@ func Redirect(c *fiber.Ctx) error {
 		return c.Status(http.StatusNotFound).SendString("Not found")
 	}
 
-	click := entities.Click{LinkID: int(link.ID), ResponseCode: testUrl(link.URL)}
+	response, _ := http.Get(link.URL)
+	click := entities.Click{LinkID: int(link.ID), ResponseCode: response.StatusCode}
 
 	resultCreate := config.Database.Create(&click)
 
@@ -154,9 +164,4 @@ func Redirect(c *fiber.Ctx) error {
 	}
 
 	return c.Redirect(link.URL)
-}
-
-func testUrl(url string) int {
-	response, _ := http.Get(url)
-	return response.StatusCode
 }
