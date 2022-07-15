@@ -11,6 +11,8 @@ require (
 	gorm.io/gorm v1.23.7
 )
 
+require github.com/pelletier/go-toml/v2 v2.0.2
+
 require (
 	github.com/andybalholm/brotli v1.0.4 // indirect
 	github.com/gofiber/template v1.6.29

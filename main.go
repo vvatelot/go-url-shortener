@@ -24,6 +24,7 @@ func main() {
 		app.Use(logger.New())
 	}
 	config.Connect()
+	config.GetTranslation()
 
 	app.Get("/r/:key", handlers.Redirect)
 	app.Static("/", "./public")

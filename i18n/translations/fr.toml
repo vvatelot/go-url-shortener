@@ -1,0 +1,20 @@
+[app]
+title="URL Shortener"
+
+[home]
+title="Liste des liens"
+
+[add_new]
+title="Ajouter un nouveau lien"
+
+[label]
+validate="Valider"
+cancel="Annuler"
+add="Ajouter"
+added_at="Ajouté le"
+url="URL"
+link="Lien"
+active="Actif"
+clicks="Clics"
+previous="Précédent"
+next="Suivant"

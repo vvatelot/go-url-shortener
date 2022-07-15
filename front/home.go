@@ -5,8 +5,11 @@ import (
 
 	"github.com/gofiber/fiber/v2"
 	"github.com/vvatelot/url-shortener/api/repositories"
+	"github.com/vvatelot/url-shortener/config"
 	"github.com/vvatelot/url-shortener/utils"
 )
+
+var translation config.Translation
 
 func HandleHomePage(c *fiber.Ctx) error {
 	page, err := strconv.Atoi(c.Query("page"))
@@ -18,19 +21,24 @@ func HandleHomePage(c *fiber.Ctx) error {
 		size = 10
 	}
 
+	flash := c.Query("flash")
+	message := c.Query("message")
+
 	links, _ := repositories.ListLinks(size, page)
 
 	CountAllLinks := repositories.CountAllLinks()
 
 	return c.Render("index", fiber.Map{
-		"PageTitle":  "Liste des liens",
+		"e":          config.T,
 		"Links":      links,
 		"Pagination": utils.GetPagination(CountAllLinks, page, size),
+		"Flash":      flash,
+		"Message":    message,
 	})
 }
 
 func HandleNewPage(c *fiber.Ctx) error {
 	return c.Render("editLink", fiber.Map{
-		"PageTitle": "Ajouter un lien",
+		"e": config.T,
 	})
 }

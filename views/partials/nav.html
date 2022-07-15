@@ -1,9 +1,19 @@
-<nav class="container-fluid">
-    <ul>
-        <li><a href="/"><b>URL Shortener</b></a></li>
-        <li> > {{ .PageTitle }}</li>
-    </ul>
-    <ul>
-        <li><a href="/new" role="button">Ajouter</a></li>
-    </ul>
+<nav class="navbar" role="navigation" aria-label="main navigation">
+    <div class="navbar-brand">
+        <a class="navbar-item" href="/"><b>{{ .e.App.Title }}</b> </a>
+    </div>
+    <div class="navbar-menu">
+        <div class="navbar-start">
+            <span class="navbar-item">{{ .e.Home.Title }}</span>
+        </div>
+        <div class="navbar-end">
+            <div class="navbar-item">
+                <div class="buttons">
+                    <a class="button is-primary" href="/new">
+                        <strong>{{ .e.Label.Add }}</strong>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
 </nav>

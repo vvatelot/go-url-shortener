@@ -12,7 +12,7 @@ func GetLastPage(countAll int64, size int) int {
 
 func GetPreviousPage(currentPage int) int {
 	if currentPage == 1 {
-		return 1
+		return 0
 	}
 
 	return currentPage - 1
@@ -20,7 +20,7 @@ func GetPreviousPage(currentPage int) int {
 
 func GetNextPage(currentPage int, lastPage int) int {
 	if currentPage == lastPage {
-		return lastPage
+		return 0
 	}
 
 	return currentPage + 1

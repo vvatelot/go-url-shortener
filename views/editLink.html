@@ -3,13 +3,17 @@
 <body>
     {{ template "partials/nav" . }}
     <main class="container">
-        <h1>{{ .Title }}</h1>
-        <form>
-            <label for="url">
-                URL
-                <input type="text" id="url" name="url" placeholder="http://" required>
-            </label>
-            <button type="submit" onclick="event.preventDefault(); addNewLink('{{ .Link.ID }}')">Submit</button>
+        <h1 class="title">{{ .e.AddNew.Title }}</h1>
+        <form onsubmit="return addNewLink()">
+            <div class="field">
+                <label class="label">{{ .e.Label.URL }}</label>
+                <div class="control">
+                    <input id="url" name="url" placeholder="http://" required class="input" type="url">
+                </div>
+            </div>
+            <div class="control">
+                <button class="button is-primary" type="submit">{{ .e.Label.Validate }}</button>
+            </div>
         </form>
     </main>
 </body>

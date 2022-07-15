@@ -70,7 +70,7 @@ func TestGetPreviousPage(t *testing.T) {
 			args: args{
 				currentPage: 1,
 			},
-			want: 1,
+			want: 0,
 		},
 		{
 			name: "Test previous page of 2",
@@ -107,14 +107,6 @@ func TestGetNextPage(t *testing.T) {
 		want int
 	}{
 		{
-			name: "Test next page of page 1 of 1",
-			args: args{
-				currentPage: 1,
-				lastPage:    1,
-			},
-			want: 1,
-		},
-		{
 			name: "Test next page of page 1 of 2",
 			args: args{
 				currentPage: 1,
@@ -128,7 +120,7 @@ func TestGetNextPage(t *testing.T) {
 				currentPage: 2,
 				lastPage:    2,
 			},
-			want: 2,
+			want: 0,
 		},
 	}
 	for _, tt := range tests {
