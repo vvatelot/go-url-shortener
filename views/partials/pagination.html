@@ -1,21 +1,21 @@
 <nav class="pagination is-centered" role="navigation" aria-label="pagination">
-    {{ if gt .Pagination.PageCurrent 1 }}
-    <a class="pagination-previous" href="/?page={{ .Pagination.PagePrevious }}&size={{ .Pagination.PageSize }}">{{ .e.Label.Previous }}</a>
-    {{ end }}
-    {{ if lt .Pagination.PageCurrent .Pagination.PageLast }}
-    <a class="pagination-next" href="/?page={{ .Pagination.PageNext }}&size={{ .Pagination.PageSize }}">{{ .e.Label.Next }}</a>
-    {{ end }}
+    {{if gt .Pagination.PageCurrent 1}}
+    <a class="pagination-previous" href="/?page={{.Pagination.PagePrevious}}&size={{.Pagination.PageSize}}">{{.e.Label.Previous}}</a>
+    {{end}}
+    {{if lt .Pagination.PageCurrent .Pagination.PageLast}}
+    <a class="pagination-next" href="/?page={{.Pagination.PageNext}}&size={{.Pagination.PageSize}}">{{.e.Label.Next}}</a>
+    {{end}}
     <ul class="pagination-list">
-        {{ if gt .Pagination.PageCurrent 1 }}
-        <li><a class="pagination-link" aria-label="Page {{ .Pagination.PagePrevious }}" aria-current="page" href="/?page={{ .Pagination.PagePrevious }}&size={{ .Pagination.PageSize }}">{{ .Pagination.PagePrevious }}</a></li>
-        {{ end }}
-        <li><a class="pagination-link is-current" aria-label="Page {{ .Pagination.PageCurrent }}" aria-current="page" href="/?page={{ .Pagination.PageCurrent }}&size={{ .Pagination.PageSize }}">{{ .Pagination.PageCurrent }}</a></li>
-        {{ if lt .Pagination.PageCurrent .Pagination.PageLast }}
-        <li><a class="pagination-link" aria-label="Page {{ .Pagination.PageNext }}" aria-current="page" href="/?page={{ .Pagination.PageNext }}&size={{ .Pagination.PageSize }}">{{ .Pagination.PageNext }}</a></li>
-        {{ end }}
-        {{ if and (lt .Pagination.PageCurrent .Pagination.PageLast) (gt .Pagination.PageLast 3) }}
+        {{if gt .Pagination.PageCurrent 1}}
+        <li><a class="pagination-link" aria-label="Page {{.Pagination.PagePrevious}}" aria-current="page" href="/?page={{.Pagination.PagePrevious}}&size={{.Pagination.PageSize}}">{{.Pagination.PagePrevious}}</a></li>
+        {{end}}
+        <li><a class="pagination-link is-current" aria-label="Page {{.Pagination.PageCurrent}}" aria-current="page" href="/?page={{.Pagination.PageCurrent}}&size={{.Pagination.PageSize}}">{{.Pagination.PageCurrent}}</a></li>
+        {{if lt .Pagination.PageCurrent .Pagination.PageLast}}
+        <li><a class="pagination-link" aria-label="Page {{.Pagination.PageNext}}" aria-current="page" href="/?page={{.Pagination.PageNext}}&size={{.Pagination.PageSize}}">{{.Pagination.PageNext}}</a></li>
+        {{end}}
+        {{if and (lt .Pagination.PageCurrent .Pagination.PageLast) (gt .Pagination.PageLast 3)}}
         <li><span class="pagination-ellipsis">&hellip;</span></li>
-        <li><a class="pagination-link" aria-label="Page {{ .Pagination.PageLast }}" aria-current="page" href="/?page={{ .Pagination.PageLast }}&size={{ .Pagination.PageSize }}">{{ .Pagination.PageLast }}</a></li>
-        {{ end }}
+        <li><a class="pagination-link" aria-label="Page {{.Pagination.PageLast}}" aria-current="page" href="/?page={{.Pagination.PageLast}}&size={{.Pagination.PageSize}}">{{.Pagination.PageLast}}</a></li>
+        {{end}}
     </ul>
 </nav>

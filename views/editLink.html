@@ -1,21 +1,23 @@
-{{ template "partials/header" . }}
+{{template "partials/header" .}}
 
 <body>
-    {{ template "partials/nav" . }}
-    <main class="container">
-        <h1 class="title">{{ .e.AddNew.Title }}</h1>
-        <form onsubmit="return addNewLink()">
-            <div class="field">
-                <label class="label">{{ .e.Label.URL }}</label>
-                <div class="control">
-                    <input id="url" name="url" placeholder="http://" required class="input" type="url">
+    {{template "partials/nav" .}}
+    <section class="section">
+        <main class="container">
+            <h1 class="title">{{.e.AddNew.Title}}</h1>
+            <form onsubmit="return addNewLink()">
+                <div class="field">
+                    <label class="label">{{.e.Label.URL}}</label>
+                    <div class="control">
+                        <input id="url" name="url" placeholder="http://" required class="input" type="url">
+                    </div>
                 </div>
-            </div>
-            <div class="control">
-                <button class="button is-primary" type="submit">{{ .e.Label.Validate }}</button>
-            </div>
-        </form>
-    </main>
+                <div class="control">
+                    <button class="button is-primary" type="submit">{{.e.Label.Validate}}</button>
+                </div>
+            </form>
+        </main>
+    </section>
 </body>
 <script type="text/javascript" src="/js/app.js"></script>
 
