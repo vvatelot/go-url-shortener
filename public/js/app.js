@@ -1,10 +1,13 @@
 document.addEventListener('DOMContentLoaded', () => {
-    (document.querySelectorAll('.notification .delete') || []).forEach(($delete) => {
-        const $notification = $delete.parentNode;
-
-        $delete.addEventListener('click', () => {
-            $notification.parentNode.removeChild($notification);
+    setTimeout(function () {
+        document.querySelectorAll('.notification').forEach(function ($notification) {
+            $notification.classList.add('is-hidden');
         });
+    }, 5000);
+
+    const deleteNotification = document.querySelector('.notification .delete')
+    deleteNotification.addEventListener('click', () => {
+        deleteNotification.parentNode.classList.add('is-hidden');
     });
 
     const $navbarBurgers = Array.prototype.slice.call(document.querySelectorAll('.navbar-burger'), 0);
@@ -21,6 +24,21 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 });
+
+
+function copyLink(key) {
+    const url = window.location.origin + "/r/" + key;
+    navigator.clipboard.writeText(url).then(function () {
+        const notification = document.querySelector('.notification')
+
+        notification.classList.remove('is-hidden', 'is-danger', 'is-success');
+        notification.classList.add('is-primary');
+        notification.querySelector('span').innerHTML = "Lien copié dans le presse-papier";
+        setTimeout(function () {
+            notification.classList.add('is-hidden');
+        }, 5000)
+    })
+}
 
 function switchLink(id) {
     if (confirm("Êtes vous sûr de vouloir changer l'état de ce lien ?")) {

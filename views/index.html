@@ -2,14 +2,14 @@
 
 <body>
     {{template "partials/nav" .}}
-    {{if .Flash}}
-    <div class='notification {{if eq .Flash "success"}}is-success{{end}} {{if eq .Flash "error"}}is-danger{{end}}'>
-        <button class="delete"></button>
-        {{.Message}}
-    </div>
-    {{end}}
     <section class="section">
         <main class="container">
+            {{if .Flash}}
+            <div class='notification {{if eq .Flash "success"}}is-success{{end}} {{if eq .Flash "error"}}is-danger{{end}}'>
+                <button class="delete"></button>
+                <span>{{.Message}}</span>
+            </div>
+            {{end}}
             <table class="table is-align-content-center is-fullwidth">
                 <thead>
                     <tr>
@@ -22,11 +22,11 @@
                 <tbody>
                     {{range .Links}}
                     <tr>
-                        <td><a href="/r/{{.Key}}" title='{{$.e.Label.AddedAt}} {{.CreatedAt.Format "2006-01-02 15:04"}}'>{{.Title}}</a></td>
+                        <td><a href="/r/{{.Key}}" title='{{$.e.Label.AddedAt}} {{.CreatedAt.Format "2006-01-02 15:04"}}'>{{.Title}}</a> <span style="cursor: pointer" title="Copier le lien" onclick="copyLink('{{.Key}}')">📋</span></td>
                         <td>{{len .Clicks}}</td>
                         <td>
                             <fieldset>
-                                <input type="checkbox" role="switch" {{if .Active}}checked{{end}} onclick="switchLink(' {{.ID}}')">
+                                <input type="checkbox" role="switch" {{if .Active}}checked{{end}} onclick="switchLink('{{.ID}}')">
                             </fieldset>
                         </td>
                         <td><button class="delete" onclick="deleteLink('{{.ID}}')"></button></td>
