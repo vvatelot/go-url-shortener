@@ -4,12 +4,11 @@
     {{template "partials/nav" .}}
     <section class="section">
         <main class="container">
-            {{if .Flash}}
-            <div class='notification {{if eq .Flash "success"}}is-success{{end}} {{if eq .Flash "error"}}is-danger{{end}}'>
+
+            <div class='notification {{if eq .Flash "success"}}is-success{{end}}{{if eq .Flash "error"}}is-danger{{end}}{{if not .Flash}}is-hidden{{end}}'>
                 <button class="delete"></button>
                 <span>{{.Message}}</span>
             </div>
-            {{end}}
             <table class="table is-align-content-center is-fullwidth">
                 <thead>
                     <tr>
