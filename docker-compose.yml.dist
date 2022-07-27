@@ -11,7 +11,11 @@ services:
       DATABASE_URI: "host=db user=gorm password=gorm dbname=gorm sslmode=disable"
       APP_PORT: 3000
       ADMIN_PASSWORD: "changeme"
-      LOCALE="fr"
+      LOCALE: "fr"
+    volumes:
+      - ./public:/public
+      - ./views:/views
+      - ./i18n:/i18n
     depends_on:
       - db
 
