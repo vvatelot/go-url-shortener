@@ -1,4 +1,6 @@
-i18n
-public
-views
+*.db
 .air.toml
+.env
+.vscode
+docker-compose.yml*
+tmp

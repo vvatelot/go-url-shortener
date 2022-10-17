@@ -1,13 +1,14 @@
 package config
 
 import (
-	"os"
+	"embed"
 
 	"github.com/pelletier/go-toml/v2"
 )
 
 var Language string = "fr"
 var T Translation
+var EmbedDirI18n embed.FS
 
 type Translation struct {
 	App struct {
@@ -34,11 +35,7 @@ type Translation struct {
 }
 
 func GetTranslation() error {
-	if os.Getenv("LOCALE") != "" {
-		Language = os.Getenv("LOCALE")
-	}
-	pwd, _ := os.Getwd()
-	file, err := os.ReadFile(pwd + "/i18n/translations/" + Language + ".toml")
+	file, err := EmbedDirI18n.ReadFile("i18n/translations/" + Language + ".toml")
 	if err != nil {
 		panic(err)
 	}

@@ -1,8 +1,6 @@
 package config
 
 import (
-	"os"
-
 	"github.com/vvatelot/url-shortener/api/entities"
 	"gorm.io/driver/postgres"
 	"gorm.io/driver/sqlite"
@@ -10,7 +8,6 @@ import (
 )
 
 var Database *gorm.DB
-var DATABASE_URI string = os.Getenv("DATABASE_URI")
 
 func Connect() error {
 	var err error
@@ -19,11 +16,11 @@ func Connect() error {
 		PrepareStmt:            true,
 	}
 
-	switch os.Getenv("ENV") {
+	switch ENV.Env {
 	case "dev":
-		Database, err = gorm.Open(sqlite.Open(DATABASE_URI), ormConfig)
+		Database, err = gorm.Open(sqlite.Open(ENV.DatabaseUri), ormConfig)
 	case "prod":
-		Database, err = gorm.Open(postgres.Open(DATABASE_URI), ormConfig)
+		Database, err = gorm.Open(postgres.Open(ENV.DatabaseUri), ormConfig)
 	}
 
 	if err != nil {
