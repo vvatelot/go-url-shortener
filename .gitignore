@@ -1,3 +1,4 @@
 *.db
 tmp/
-docker-compose.yml
+docker-compose.override.yml
+.env
