@@ -11,7 +11,7 @@ require (
 	gorm.io/gorm v1.25.2-0.20230530020048-26663ab9bf55
 )
 
-require github.com/pelletier/go-toml/v2 v2.0.2
+require github.com/pelletier/go-toml/v2 v2.1.0
 
 require (
 	github.com/andybalholm/brotli v1.0.4 // indirect
@@ -29,7 +29,6 @@ require (
 	github.com/klauspost/compress v1.15.7 // indirect
 	github.com/mattn/go-sqlite3 v1.14.17 // indirect
 	github.com/shopspring/decimal v1.3.1 // indirect
-	github.com/stretchr/testify v1.7.5 // indirect
 	github.com/valyala/bytebufferpool v1.0.0 // indirect
 	github.com/valyala/fasthttp v1.38.0 // indirect
 	github.com/valyala/tcplisten v1.0.0 // indirect
