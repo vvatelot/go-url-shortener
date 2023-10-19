@@ -1,0 +1,7 @@
+services:
+  app:
+    environment:
+      ENV: prod
+      DATABASE_URI: "host=db user=gorm password=gorm dbname=gorm sslmode=disable"
+      ADMIN_PASSWORD: "changeme" # change this
+      LOCALE: "fr"
