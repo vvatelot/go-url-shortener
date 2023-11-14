@@ -3,7 +3,7 @@ module github.com/vvatelot/url-shortener
 go 1.18
 
 require (
-	github.com/gofiber/fiber/v2 v2.50.0
+	github.com/gofiber/fiber/v2 v2.51.0
 	github.com/joho/godotenv v1.5.1
 	github.com/satori/go.uuid v1.2.0
 	gorm.io/driver/postgres v1.5.4
@@ -14,10 +14,10 @@ require (
 require github.com/pelletier/go-toml/v2 v2.1.0
 
 require (
-	github.com/google/uuid v1.3.1 // indirect
+	github.com/google/uuid v1.4.0 // indirect
 	github.com/jackc/pgx/v5 v5.4.3 // indirect
 	github.com/mattn/go-colorable v0.1.13 // indirect
-	github.com/mattn/go-isatty v0.0.19 // indirect
+	github.com/mattn/go-isatty v0.0.20 // indirect
 	github.com/mattn/go-runewidth v0.0.15 // indirect
 	github.com/rivo/uniseg v0.2.0 // indirect
 	github.com/rogpeppe/go-internal v1.11.0 // indirect
