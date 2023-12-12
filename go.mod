@@ -11,7 +11,7 @@ require (
 	gorm.io/gorm v1.25.5
 )
 
-require github.com/pelletier/go-toml/v2 v2.1.0
+require github.com/pelletier/go-toml/v2 v2.1.1
 
 require (
 	github.com/google/uuid v1.3.1 // indirect
