@@ -6,9 +6,9 @@ require (
 	github.com/gofiber/fiber/v2 v2.50.0
 	github.com/joho/godotenv v1.5.1
 	github.com/satori/go.uuid v1.2.0
-	gorm.io/driver/postgres v1.5.4
+	gorm.io/driver/postgres v1.5.6
 	gorm.io/driver/sqlite v1.5.4
-	gorm.io/gorm v1.25.5
+	gorm.io/gorm v1.25.7-0.20240204074919-46816ad31dde
 )
 
 require github.com/pelletier/go-toml/v2 v2.1.0
