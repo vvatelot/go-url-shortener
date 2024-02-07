@@ -8,7 +8,7 @@ require (
 	github.com/satori/go.uuid v1.2.0
 	gorm.io/driver/postgres v1.5.4
 	gorm.io/driver/sqlite v1.5.4
-	gorm.io/gorm v1.25.5
+	gorm.io/gorm v1.25.7
 )
 
 require github.com/pelletier/go-toml/v2 v2.1.0
