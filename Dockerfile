@@ -1,12 +1,13 @@
-FROM golang:buster AS build
+FROM golang:1.25-bookworm AS build
 
 WORKDIR /app
-ADD ./ ./
+COPY go.mod go.sum ./
 RUN go mod download
-RUN go build -o /url-shortener
+COPY . ./
+RUN CGO_ENABLED=1 go build -buildvcs=false -o /url-shortener
 
 
-FROM gcr.io/distroless/base-debian10
+FROM gcr.io/distroless/base-debian12
 
 WORKDIR /
 COPY --from=build /url-shortener /url-shortener
