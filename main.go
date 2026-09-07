@@ -9,7 +9,7 @@ import (
 	"github.com/gofiber/fiber/v2/middleware/basicauth"
 	"github.com/gofiber/fiber/v2/middleware/filesystem"
 	"github.com/gofiber/fiber/v2/middleware/logger"
-	"github.com/gofiber/template/html"
+	"github.com/gofiber/template/html/v2"
 	"github.com/vvatelot/url-shortener/api/handlers"
 	"github.com/vvatelot/url-shortener/config"
 	"github.com/vvatelot/url-shortener/front"

@@ -5,7 +5,7 @@ import (
 	"strconv"
 
 	"github.com/gofiber/fiber/v2"
-	uuid "github.com/satori/go.uuid"
+	"github.com/google/uuid"
 	"github.com/vvatelot/url-shortener/api/entities"
 	"github.com/vvatelot/url-shortener/api/repositories"
 	"github.com/vvatelot/url-shortener/config"
@@ -71,7 +71,7 @@ func AddLink(c *fiber.Ctx) error {
 		return c.Status(http.StatusBadRequest).SendString("Can not get Page title")
 	}
 
-	link.Key = uuid.NewV4().String()
+	link.Key = uuid.New().String()
 
 	result := config.Database.Create(&link)
 
