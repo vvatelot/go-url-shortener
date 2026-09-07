@@ -20,15 +20,20 @@ type Translation struct {
 	AddNew struct {
 		Title string `toml:"title"`
 	} `toml:"add_new"`
+	Edit struct {
+		Title string `toml:"title"`
+	} `toml:"edit"`
 	Label struct {
 		Active   string `toml:"active"`
 		Add      string `toml:"add"`
 		AddedAt  string `toml:"added_at"`
 		Cancel   string `toml:"cancel"`
 		Clicks   string `toml:"clicks"`
+		Edit     string `toml:"edit"`
 		Link     string `toml:"link"`
 		Next     string `toml:"next"`
 		Previous string `toml:"previous"`
+		Title    string `toml:"title"`
 		URL      string `toml:"url"`
 		Validate string `toml:"validate"`
 	} `toml:"label"`

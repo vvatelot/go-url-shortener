@@ -52,6 +52,7 @@ func main() {
 	app.Use(basicauth.New(config.BasicAuthConfig()))
 	app.Get("/", front.HandleHomePage)
 	app.Get("/new", front.HandleNewPage)
+	app.Get("/edit/:id", front.HandleEditPage)
 
 	api := app.Group("/api")
 	links := api.Group("/links")

@@ -102,7 +102,15 @@ func UpdateLink(c *fiber.Ctx) error {
 		dbLink.Title = bodyLink.Title
 	}
 
-	if bodyLink.URL != "" {
+	if bodyLink.URL != "" && bodyLink.URL != dbLink.URL {
+		response, err := http.Get(bodyLink.URL)
+		if err != nil {
+			return c.Status(http.StatusBadRequest).SendString("Invalid URL")
+		}
+		defer response.Body.Close()
+		if response.StatusCode != http.StatusOK {
+			return c.Status(http.StatusBadRequest).SendString("Invalid URL")
+		}
 		dbLink.URL = bodyLink.URL
 	}
 

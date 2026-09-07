@@ -7,14 +7,19 @@ title="Liste des liens"
 [add_new]
 title="Ajouter un nouveau lien"
 
+[edit]
+title="Modifier un lien"
+
 [label]
 validate="Valider"
 cancel="Annuler"
 add="Ajouter"
 added_at="Ajouté le"
 url="URL"
+title="Titre"
 link="Lien"
 active="Actif"
 clicks="Clics"
 previous="Précédent"
 next="Suivant"
+edit="Éditer"

@@ -74,6 +74,36 @@ function addNewLink() {
     return false;
 }
 
+function updateLink(id) {
+    var title = document.getElementById("title").value;
+    var url = document.getElementById("url").value;
+
+    if (title && url) {
+        fetch("/api/links/" + id, {
+            method: "PATCH",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                title: title,
+                url: url,
+            })
+        }).then(function (response) {
+            if (!response.ok) {
+                return response.text().then(function (message) {
+                    throw new Error(message || "Erreur lors de la modification");
+                });
+            }
+            window.location.href = "/?flash=success&message=Le lien a bien été modifié";
+        }).catch(function (error) {
+            window.location.href = "/?flash=error&message=" + encodeURIComponent(error.message);
+            console.log(error);
+        })
+    }
+
+    return false;
+}
+
 function deleteLink(id) {
     if (confirm("Êtes vous sûr de vouloir supprimer ce lien ?")) {
         fetch("/api/links/" + id, {

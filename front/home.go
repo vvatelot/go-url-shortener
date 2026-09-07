@@ -39,6 +39,25 @@ func HandleHomePage(c *fiber.Ctx) error {
 
 func HandleNewPage(c *fiber.Ctx) error {
 	return c.Render("editLink", fiber.Map{
-		"e": config.T,
+		"e":      config.T,
+		"IsEdit": false,
+	})
+}
+
+func HandleEditPage(c *fiber.Ctx) error {
+	id, err := strconv.Atoi(c.Params("id"))
+	if err != nil {
+		return c.Status(fiber.StatusBadRequest).SendString("Invalid id")
+	}
+
+	link, err := repositories.GetLinkByID(id)
+	if err != nil {
+		return c.Status(fiber.StatusNotFound).SendString("Not found")
+	}
+
+	return c.Render("editLink", fiber.Map{
+		"e":      config.T,
+		"IsEdit": true,
+		"Link":   link,
 	})
 }
