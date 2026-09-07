@@ -23,19 +23,30 @@ type Translation struct {
 	Edit struct {
 		Title string `toml:"title"`
 	} `toml:"edit"`
+	Detail struct {
+		Title      string `toml:"title"`
+		StatsTitle string `toml:"stats_title"`
+	} `toml:"detail"`
 	Label struct {
-		Active   string `toml:"active"`
-		Add      string `toml:"add"`
-		AddedAt  string `toml:"added_at"`
-		Cancel   string `toml:"cancel"`
-		Clicks   string `toml:"clicks"`
-		Edit     string `toml:"edit"`
-		Link     string `toml:"link"`
-		Next     string `toml:"next"`
-		Previous string `toml:"previous"`
-		Title    string `toml:"title"`
-		URL      string `toml:"url"`
-		Validate string `toml:"validate"`
+		Active      string `toml:"active"`
+		Add         string `toml:"add"`
+		AddedAt     string `toml:"added_at"`
+		Back        string `toml:"back"`
+		Cancel      string `toml:"cancel"`
+		Clicks      string `toml:"clicks"`
+		Detail      string `toml:"detail"`
+		Edit        string `toml:"edit"`
+		Last7Days   string `toml:"last_7_days"`
+		Last30Days  string `toml:"last_30_days"`
+		Link        string `toml:"link"`
+		Next        string `toml:"next"`
+		No          string `toml:"no"`
+		PeriodTotal string `toml:"period_total"`
+		Previous    string `toml:"previous"`
+		Title       string `toml:"title"`
+		URL         string `toml:"url"`
+		Validate    string `toml:"validate"`
+		Yes         string `toml:"yes"`
 	} `toml:"label"`
 }
 

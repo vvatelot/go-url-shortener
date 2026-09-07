@@ -53,9 +53,11 @@ func main() {
 	app.Get("/", front.HandleHomePage)
 	app.Get("/new", front.HandleNewPage)
 	app.Get("/edit/:id", front.HandleEditPage)
+	app.Get("/links/:id", front.HandleLinkDetailPage)
 
 	api := app.Group("/api")
 	links := api.Group("/links")
+	links.Get("/:id/clicks/stats", handlers.GetLinkClickStats)
 	links.Get("/:id", handlers.GetLink)
 	links.Get("/", handlers.GetLinks)
 	links.Post("/", handlers.AddLink)

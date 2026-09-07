@@ -22,13 +22,14 @@
                     {{range .Links}}
                     <tr>
                         <td><a href="/r/{{.Key}}" title='{{$.e.Label.AddedAt}} {{.CreatedAt.Format "2006-01-02 15:04"}}'>{{.Title}}</a> <span style="cursor: pointer" title="Copier le lien" onclick="copyLink('{{.Key}}')">📋</span></td>
-                        <td>{{len .Clicks}}</td>
+                        <td><a href="/links/{{.ID}}">{{len .Clicks}}</a></td>
                         <td>
                             <fieldset>
                                 <input type="checkbox" role="switch" {{if .Active}}checked{{end}} onclick="switchLink('{{.ID}}')">
                             </fieldset>
                         </td>
                         <td>
+                            <a href="/links/{{.ID}}" title="{{$.e.Label.Detail}}">📊</a>
                             <a href="/edit/{{.ID}}" title="{{$.e.Label.Edit}}">✏️</a>
                             <button class="delete" onclick="deleteLink('{{.ID}}')"></button>
                         </td>

@@ -61,3 +61,26 @@ func HandleEditPage(c *fiber.Ctx) error {
 		"Link":   link,
 	})
 }
+
+func HandleLinkDetailPage(c *fiber.Ctx) error {
+	id, err := strconv.Atoi(c.Params("id"))
+	if err != nil {
+		return c.Status(fiber.StatusBadRequest).SendString("Invalid id")
+	}
+
+	link, err := repositories.GetLinkByID(id)
+	if err != nil {
+		return c.Status(fiber.StatusNotFound).SendString("Not found")
+	}
+
+	totalClicks, err := repositories.CountAllClicksByLinkID(id)
+	if err != nil {
+		return c.Status(fiber.StatusInternalServerError).SendString("Error while loading stats")
+	}
+
+	return c.Render("linkDetail", fiber.Map{
+		"e":           config.T,
+		"Link":        link,
+		"TotalClicks": totalClicks,
+	})
+}

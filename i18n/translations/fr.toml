@@ -10,6 +10,10 @@ title="Ajouter un nouveau lien"
 [edit]
 title="Modifier un lien"
 
+[detail]
+title="Détail du lien"
+stats_title="Statistiques de clics"
+
 [label]
 validate="Valider"
 cancel="Annuler"
@@ -23,3 +27,10 @@ clicks="Clics"
 previous="Précédent"
 next="Suivant"
 edit="Éditer"
+detail="Détail"
+back="Retour"
+yes="Oui"
+no="Non"
+last_7_days="7 jours"
+last_30_days="30 jours"
+period_total="Total sur la période"

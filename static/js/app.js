@@ -6,9 +6,11 @@ document.addEventListener('DOMContentLoaded', () => {
     }, 5000);
 
     const deleteNotification = document.querySelector('.notification .delete')
-    deleteNotification.addEventListener('click', () => {
-        deleteNotification.parentNode.classList.add('is-hidden');
-    });
+    if (deleteNotification) {
+        deleteNotification.addEventListener('click', () => {
+            deleteNotification.parentNode.classList.add('is-hidden');
+        });
+    }
 
     const $navbarBurgers = Array.prototype.slice.call(document.querySelectorAll('.navbar-burger'), 0);
 
@@ -30,6 +32,9 @@ function copyLink(key) {
     const url = window.location.origin + "/r/" + key;
     navigator.clipboard.writeText(url).then(function () {
         const notification = document.querySelector('.notification')
+        if (!notification) {
+            return;
+        }
 
         notification.classList.remove('is-hidden', 'is-danger', 'is-success');
         notification.classList.add('is-primary');
@@ -117,4 +122,83 @@ function deleteLink(id) {
             console.log(error);
         })
     }
+}
+
+var clicksChart = null;
+
+function setWindowButtons(window) {
+    var button7d = document.getElementById("window-7d");
+    var button30d = document.getElementById("window-30d");
+    if (!button7d || !button30d) {
+        return;
+    }
+    button7d.classList.toggle("is-primary", window === "7d");
+    button30d.classList.toggle("is-primary", window === "30d");
+}
+
+function loadClickStats(linkId, window) {
+    var canvas = document.getElementById("clicks-chart");
+    if (!canvas || typeof Chart === "undefined") {
+        return;
+    }
+
+    setWindowButtons(window);
+
+    fetch("/api/links/" + linkId + "/clicks/stats?window=" + encodeURIComponent(window))
+        .then(function (response) {
+            if (!response.ok) {
+                throw new Error("Impossible de charger les statistiques");
+            }
+            return response.json();
+        })
+        .then(function (data) {
+            var totalEl = document.getElementById("stats-total");
+            if (totalEl) {
+                totalEl.textContent = data.total;
+            }
+
+            var labels = data.buckets.map(function (bucket) {
+                return bucket.date;
+            });
+            var values = data.buckets.map(function (bucket) {
+                return bucket.count;
+            });
+
+            if (clicksChart) {
+                clicksChart.destroy();
+            }
+
+            clicksChart = new Chart(canvas, {
+                type: "bar",
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: "Clics",
+                        data: values,
+                        backgroundColor: "rgba(72, 95, 199, 0.65)",
+                        borderColor: "rgba(72, 95, 199, 1)",
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            ticks: {
+                                precision: 0
+                            }
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            display: false
+                        }
+                    }
+                }
+            });
+        })
+        .catch(function (error) {
+            console.log(error);
+        });
 }

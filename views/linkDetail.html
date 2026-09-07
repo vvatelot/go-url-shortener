@@ -1,0 +1,63 @@
+{{template "partials/header" .}}
+
+<body>
+    {{template "partials/nav" .}}
+    <section class="section">
+        <main class="container">
+            <div class="level">
+                <div class="level-left">
+                    <div class="level-item">
+                        <h1 class="title">{{.e.Detail.Title}}</h1>
+                    </div>
+                </div>
+                <div class="level-right">
+                    <div class="level-item">
+                        <a class="button" href="/">{{.e.Label.Back}}</a>
+                        <a class="button is-link ml-2" href="/edit/{{.Link.ID}}">{{.e.Label.Edit}}</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="content mb-5">
+                <p><strong>{{.e.Label.Title}}:</strong> {{.Link.Title}}</p>
+                <p><strong>{{.e.Label.URL}}:</strong> <a href="{{.Link.URL}}" target="_blank" rel="noopener noreferrer">{{.Link.URL}}</a></p>
+                <p><strong>{{.e.Label.Link}}:</strong> <a href="/r/{{.Link.Key}}">/r/{{.Link.Key}}</a>
+                    <span style="cursor: pointer" title="Copier le lien" onclick="copyLink('{{.Link.Key}}')">📋</span>
+                </p>
+                <p><strong>{{.e.Label.Clicks}}:</strong> {{.TotalClicks}}</p>
+                <p><strong>{{.e.Label.Active}}:</strong> {{if .Link.Active}}{{.e.Label.Yes}}{{else}}{{.e.Label.No}}{{end}}</p>
+            </div>
+
+            <div class='notification is-hidden' id="detail-notification">
+                <button class="delete"></button>
+                <span></span>
+            </div>
+
+            <div class="box">
+                <div class="level mb-4">
+                    <div class="level-left">
+                        <h2 class="title is-5 mb-0">{{.e.Detail.StatsTitle}}</h2>
+                    </div>
+                    <div class="level-right">
+                        <div class="buttons has-addons">
+                            <button type="button" class="button is-primary" id="window-7d" onclick="loadClickStats('{{.Link.ID}}', '7d')">{{.e.Label.Last7Days}}</button>
+                            <button type="button" class="button" id="window-30d" onclick="loadClickStats('{{.Link.ID}}', '30d')">{{.e.Label.Last30Days}}</button>
+                        </div>
+                    </div>
+                </div>
+                <p class="mb-3"><strong>{{.e.Label.PeriodTotal}}:</strong> <span id="stats-total">0</span></p>
+                <canvas id="clicks-chart" height="120"></canvas>
+            </div>
+        </main>
+    </section>
+</body>
+
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+<script type="text/javascript" src="/static/js/app.js"></script>
+<script type="text/javascript">
+    document.addEventListener('DOMContentLoaded', function () {
+        loadClickStats('{{.Link.ID}}', '7d');
+    });
+</script>
+
+</html>
