@@ -4,7 +4,27 @@
     {{template "partials/nav" .}}
     <section class="section">
         <main class="container">
-            <h1 class="title">{{.e.AddNew.Title}}</h1>
+            <h1 class="title">{{if .IsEdit}}{{.e.Edit.Title}}{{else}}{{.e.AddNew.Title}}{{end}}</h1>
+            {{if .IsEdit}}
+            <form onsubmit="return updateLink('{{.Link.ID}}')">
+                <div class="field">
+                    <label class="label">{{.e.Label.Title}}</label>
+                    <div class="control">
+                        <input id="title" name="title" value="{{.Link.Title}}" required class="input" type="text">
+                    </div>
+                </div>
+                <div class="field">
+                    <label class="label">{{.e.Label.URL}}</label>
+                    <div class="control">
+                        <input id="url" name="url" value="{{.Link.URL}}" placeholder="http://" required class="input" type="url">
+                    </div>
+                </div>
+                <div class="control">
+                    <button class="button is-primary" type="submit">{{.e.Label.Validate}}</button>
+                    <a class="button" href="/">{{.e.Label.Cancel}}</a>
+                </div>
+            </form>
+            {{else}}
             <form onsubmit="return addNewLink()">
                 <div class="field">
                     <label class="label">{{.e.Label.URL}}</label>
@@ -16,6 +36,7 @@
                     <button class="button is-primary" type="submit">{{.e.Label.Validate}}</button>
                 </div>
             </form>
+            {{end}}
         </main>
     </section>
 </body>

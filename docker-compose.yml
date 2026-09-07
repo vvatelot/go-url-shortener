@@ -11,17 +11,24 @@ services:
       - ./views:/views
       - ./i18n:/i18n
     depends_on:
-      - db
+      db:
+        condition: service_healthy
 
   db:
     container_name: url-shortener-db
-    image: postgres
+    # Pin major version: postgres:latest (18+) expects mount at /var/lib/postgresql
+    image: postgres:16
     environment:
       POSTGRES_PASSWORD: gorm
       POSTGRES_USER: gorm
       POSTGRES_DB: gorm
     volumes:
       - db_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U gorm -d gorm"]
+      interval: 2s
+      timeout: 5s
+      retries: 10
 
 volumes:
   db_data: ~

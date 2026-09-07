@@ -1,7 +1,7 @@
 services:
   app:
+    env_file:
+      - .env
     environment:
-      ENV: prod
+      # host=db only resolves inside the compose network
       DATABASE_URI: "host=db user=gorm password=gorm dbname=gorm sslmode=disable"
-      ADMIN_PASSWORD: "changeme" # change this
-      LOCALE: "fr"

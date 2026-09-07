@@ -28,7 +28,10 @@
                                 <input type="checkbox" role="switch" {{if .Active}}checked{{end}} onclick="switchLink('{{.ID}}')">
                             </fieldset>
                         </td>
-                        <td><button class="delete" onclick="deleteLink('{{.ID}}')"></button></td>
+                        <td>
+                            <a href="/edit/{{.ID}}" title="{{$.e.Label.Edit}}">✏️</a>
+                            <button class="delete" onclick="deleteLink('{{.ID}}')"></button>
+                        </td>
                     </tr>
                     {{end}}
             </table>
